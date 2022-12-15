@@ -14,4 +14,18 @@ async function readTalkerData() {
   }
 }
 
-module.exports = { readTalkerData };
+const readTalkers = async () => {
+  const talkers = await readTalkerData();
+  return talkers;
+};
+
+const readTalkerId = async (id) => {
+  const talkers = await readTalkerData();
+  return talkers.filter((talker) => talker.id === id);
+};
+
+module.exports = { 
+  readTalkerData,
+  readTalkers,
+  readTalkerId,
+};
