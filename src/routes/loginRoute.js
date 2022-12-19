@@ -7,7 +7,7 @@ const router = express.Router();
 
 const login = require('../login');
 
-router.post('/login', emailValidation, passwdValidation, (req, res) => {
+router.post('/', emailValidation, passwdValidation, (req, res) => {
   const token = login.randomKey();
 
   res.status(200).json({ token });
