@@ -65,8 +65,17 @@ watchedValidation,
 talkerEdit, async (req, res) => {
   const id = Number(req.params.id);
   const chosenTalker = { id, ...req.body };
-  
+
   return res.status(200).json(chosenTalker);
   });
+
+router.delete('/:id', tokenValidation, async (req, res) => {
+  const data = await readTalkerData('../talker.json');
+  const { id } = req.params;
+  const filteredData = data.filter((talkers) => talkers.id !== Number(id));
+  await writeTalkerData('../talker.json', filteredData);
+
+  return res.status(204).json();
+});
 
 module.exports = router;
