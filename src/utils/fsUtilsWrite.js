@@ -1,13 +1,10 @@
 const fs = require('fs').promises;
+const { join } = require('path');
 
-async function writeTalkerData(data, path) {
-  try {
-    const dataWrite = await fs.writeFile(path, JSON.stringify(data, null, 2));
+const path = '../talker.json';
 
-    return dataWrite;
-  } catch (error) {
-    console.error(`Erro na escrita do arquivo ${error}`);
-  }
+async function writeTalkerData(data) {
+  await fs.writeFile(join(__dirname, path), JSON.stringify(data, null, 2));
 }
 
 module.exports = { writeTalkerData };
