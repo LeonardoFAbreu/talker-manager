@@ -1,12 +1,10 @@
 const express = require('express');
-// const fs = require('fs').promises;
-// const path = require('path');
 
 const app = express();
 app.use(express.json());
 
 const { readTalkerData } = require('../utils/fsUtilsRead');
-const { writeTalkerData } = require('../utils/fsUtilsWrite');
+const { writeTalkerData, talkerEdit } = require('../utils/fsUtilsWrite');
 
 const talker = require('../talker');
 const tokenValidation = require('../middlewares/tokenValidation');
@@ -57,21 +55,18 @@ watchedValidation, async (req, res) => {
   return res.status(201).json(newTalker);
 });
 
-// router.put('/:id', 
-// tokenValidation,
-// ageValidation,
-// nameValidation,
-// talkValidation,
-// rateValidation,
-// watchedValidation, async (req, res) => {
-//   const { id } = req.params;
-//   const talkers = await JSON.parse(fs.readFile('./talker.json'));
-//   const index = talkers.findIndex((_talker) => talker.id === Number(id));
-//   talkers[index] = {
-//     id: Number(id), ...req.body,
-//   };
-//   await fs.writeFile('./talker.json', JSON.stringify(talkers, null, 2));
-//   res.status(200).json(talkers[index]);
-// });
+router.put('/:id', 
+tokenValidation,
+ageValidation,
+nameValidation,
+talkValidation,
+rateValidation,
+watchedValidation, 
+talkerEdit, async (req, res) => {
+  const id = Number(req.params.id);
+  const chosenTalker = { id, ...req.body };
+  
+  return res.status(200).json(chosenTalker);
+  });
 
 module.exports = router;
