@@ -18,9 +18,19 @@ const router = express.Router();
 
 router.get('/', async (_req, res) => {
   const talkers = await talker.readTalkerData();
-
+  
   return res.status(200).json(talkers);
 });
+
+router.get('/search', tokenValidation, async (req, res) => {
+  const { q } = req.query;
+  const dataTalkers = await readTalkerData();
+  const filterTalker = dataTalkers.filter((data) => data.name.includes(q));
+    if (!filterTalker) {
+      return res.status(200).send([]);
+    }
+     return res.status(200).send(filterTalker);
+  });
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
